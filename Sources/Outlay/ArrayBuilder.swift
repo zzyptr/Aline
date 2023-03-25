@@ -3,7 +3,7 @@ enum ArrayBuilder {
 
     @inlinable
     static func buildBlock<Element>(_ components: [Element]...) -> [Element] {
-        return components.reduce([], +)
+        return components.reduce(into: [], +=)
     }
 
     @inlinable
@@ -23,7 +23,7 @@ enum ArrayBuilder {
 
     @inlinable
     static func buildArray<Element>(_ components: [[Element]]) -> [Element] {
-        return components.reduce([], +)
+        return components.reduce(into: [], +=)
     }
 
     @inlinable
