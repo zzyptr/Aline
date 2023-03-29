@@ -3,16 +3,11 @@ import UIKit
 public final class Spacing: UIView {
 
     @usableFromInline
-    let dimension: CGFloat?
-
-    public init() {
-        self.dimension = nil
-        super.init(frame: .zero)
-    }
+    let minLength: CGFloat
 
     @inlinable
-    public init(_ dimension: CGFloat) {
-        self.dimension = dimension
+    public init(_ minLength: CGFloat = UIView.noIntrinsicMetric) {
+        self.minLength = minLength
         super.init(frame: .zero)
     }
 
@@ -20,29 +15,27 @@ public final class Spacing: UIView {
     public override func willMove(toSuperview newSuperview: UIView?) {
         super.willMove(toSuperview: newSuperview)
 
-        let priority = UILayoutPriority(dimension == nil ? 0 : 99)
+        let priority = UILayoutPriority(minLength == UIView.noIntrinsicMetric ? 1 : 9)
         setContentHuggingPriority(priority, for: .vertical)
         setContentHuggingPriority(priority, for: .horizontal)
-        setContentCompressionResistancePriority(priority, for: .vertical)
-        setContentCompressionResistancePriority(priority, for: .horizontal)
+        setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
+        setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
     }
 
     @inlinable
     public override var intrinsicContentSize: CGSize {
-        if let dimension = dimension {
-            return CGSize(width: dimension, height: dimension)
-        }
-        return CGSize(width: UIView.noIntrinsicMetric, height: UIView.noIntrinsicMetric)
+        return CGSize(width: minLength, height: minLength)
     }
 
     @available(*, unavailable)
-    public override init(frame: CGRect) {
-        self.dimension = nil
+    override init(frame: CGRect) {
+        self.minLength = UIView.noIntrinsicMetric
         super.init(frame: frame)
     }
 
     @available(*, unavailable)
     required init?(coder: NSCoder) {
-        return nil
+        self.minLength = UIView.noIntrinsicMetric
+        super.init(coder: coder)
     }
 }

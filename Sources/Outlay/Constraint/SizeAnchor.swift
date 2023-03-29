@@ -64,6 +64,36 @@ extension SizeAnchor {
 
     /// SizeAnchor == SizeAnchor * m + c
     @inlinable
+    public static func == (lhs: SizeAnchor, rhs: Multiplication<SizeAnchor, CGFloat>) -> [NSLayoutConstraint] {
+        return [
+            lhs.width.constraint(equalTo: rhs.lhs.width, multiplier: rhs.rhs),
+            lhs.height.constraint(equalTo: rhs.lhs.height, multiplier: rhs.rhs)
+        ]
+    }
+
+    /// SizeAnchor <= SizeAnchor * m + c
+    @inlinable
+    public static func <= (lhs: SizeAnchor, rhs: Multiplication<SizeAnchor, CGFloat>) -> [NSLayoutConstraint] {
+        return [
+            lhs.width.constraint(lessThanOrEqualTo: rhs.lhs.width, multiplier: rhs.rhs),
+            lhs.height.constraint(lessThanOrEqualTo: rhs.lhs.height, multiplier: rhs.rhs)
+        ]
+    }
+
+    /// SizeAnchor >= SizeAnchor * m + c
+    @inlinable
+    public static func >= (lhs: SizeAnchor, rhs: Multiplication<SizeAnchor, CGFloat>) -> [NSLayoutConstraint] {
+        return [
+            lhs.width.constraint(greaterThanOrEqualTo: rhs.lhs.width, multiplier: rhs.rhs),
+            lhs.height.constraint(greaterThanOrEqualTo: rhs.lhs.height, multiplier: rhs.rhs)
+        ]
+    }
+}
+
+extension SizeAnchor {
+
+    /// SizeAnchor == SizeAnchor * m + c
+    @inlinable
     public static func == (lhs: SizeAnchor, rhs: Addition<Multiplication<SizeAnchor, CGFloat>, CGSize>) -> [NSLayoutConstraint] {
         return [
             lhs.width.constraint(equalTo: rhs.lhs.lhs.width, multiplier: rhs.lhs.rhs, constant: rhs.rhs.width),
@@ -94,8 +124,8 @@ extension SizeAnchor {
 
     /// SizeAnchor * m + 0
     @inlinable
-    public static func * (lhs: SizeAnchor, rhs: CGFloat) -> Addition<Multiplication<SizeAnchor, CGFloat>, CGSize> {
-        return Addition(Multiplication(lhs, rhs), .zero)
+    public static func * (lhs: SizeAnchor, rhs: CGFloat) -> Multiplication<SizeAnchor, CGFloat> {
+        return Multiplication(lhs, rhs)
     }
 
     /// SizeAnchor * 1 + c
@@ -112,26 +142,19 @@ extension SizeAnchor {
     }
 }
 
-extension Addition where LHS == Multiplication<SizeAnchor, CGFloat>, RHS == CGSize {
+extension Multiplication where LHS == SizeAnchor, RHS == CGFloat {
 
     /// SizeAnchor * m + c
     @inlinable
-    public static func + (lhs: Addition, rhs: CGSize) -> Addition {
-        let addend = CGSize(
-            width: lhs.rhs.width + rhs.width,
-            height: lhs.rhs.height + rhs.height
-        )
-        return Addition(lhs.lhs, addend)
+    public static func + (lhs: Multiplication, rhs: CGSize) -> Addition<Multiplication, CGSize> {
+        return Addition(lhs, rhs)
     }
 
     /// SizeAnchor * m - c
     @inlinable
-    public static func - (lhs: Addition, rhs: CGSize) -> Addition {
-        let addend = CGSize(
-            width: lhs.rhs.width - rhs.width,
-            height: lhs.rhs.height - rhs.height
-        )
-        return Addition(lhs.lhs, addend)
+    public static func - (lhs: Multiplication, rhs: CGSize) -> Addition<Multiplication, CGSize> {
+        let addend = CGSize(width: -rhs.width, height: -rhs.height)
+        return Addition(lhs, addend)
     }
 }
 

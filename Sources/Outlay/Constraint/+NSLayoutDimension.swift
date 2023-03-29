@@ -46,6 +46,27 @@ extension NSLayoutDimension {
 
     /// NSLayoutDimension == NSLayoutDimension * m + c
     @inlinable
+    public static func == (lhs: NSLayoutDimension, rhs: Multiplication<NSLayoutDimension, CGFloat>) -> NSLayoutConstraint {
+        return lhs.constraint(equalTo: rhs.lhs, multiplier: rhs.rhs)
+    }
+
+    /// NSLayoutDimension <= NSLayoutDimension * m + c
+    @inlinable
+    public static func <= (lhs: NSLayoutDimension, rhs: Multiplication<NSLayoutDimension, CGFloat>) -> NSLayoutConstraint {
+        return lhs.constraint(lessThanOrEqualTo: rhs.lhs, multiplier: rhs.rhs)
+    }
+
+    /// NSLayoutDimension >= NSLayoutDimension * m + c
+    @inlinable
+    public static func >= (lhs: NSLayoutDimension, rhs: Multiplication<NSLayoutDimension, CGFloat>) -> NSLayoutConstraint {
+        return lhs.constraint(greaterThanOrEqualTo: rhs.lhs, multiplier: rhs.rhs)
+    }
+}
+
+extension NSLayoutDimension {
+
+    /// NSLayoutDimension == NSLayoutDimension * m + c
+    @inlinable
     public static func == (lhs: NSLayoutDimension, rhs: Addition<Multiplication<NSLayoutDimension, CGFloat>, CGFloat>) -> NSLayoutConstraint {
         return lhs.constraint(equalTo: rhs.lhs.lhs, multiplier: rhs.lhs.rhs, constant: rhs.rhs)
     }
@@ -67,8 +88,8 @@ extension NSLayoutDimension {
 
     /// NSLayoutDimension * m + 0
     @inlinable
-    public static func * (lhs: NSLayoutDimension, rhs: CGFloat) -> Addition<Multiplication<NSLayoutDimension, CGFloat>, CGFloat> {
-        return Addition(Multiplication(lhs, rhs), 0)
+    public static func * (lhs: NSLayoutDimension, rhs: CGFloat) -> Multiplication<NSLayoutDimension, CGFloat> {
+        return Multiplication(lhs, rhs)
     }
 
     /// NSLayoutDimension * 1 + c
@@ -84,15 +105,15 @@ extension NSLayoutDimension {
     }
 }
 
-extension Addition where LHS == Multiplication<NSLayoutDimension, CGFloat>, RHS == CGFloat {
+extension Multiplication where LHS == NSLayoutDimension, RHS == CGFloat {
 
     @inlinable
-    public static func + (lhs: Addition, rhs: CGFloat) -> Addition {
-        return Addition(lhs.lhs, lhs.rhs + rhs)
+    public static func + (lhs: Multiplication, rhs: CGFloat) -> Addition<Multiplication, CGFloat> {
+        return Addition(lhs, rhs)
     }
 
     @inlinable
-    public static func - (lhs: Addition, rhs: CGFloat) -> Addition {
-        return Addition(lhs.lhs, lhs.rhs - rhs)
+    public static func - (lhs: Multiplication, rhs: CGFloat) -> Addition<Multiplication, CGFloat> {
+        return Addition(lhs, -rhs)
     }
 }

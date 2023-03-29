@@ -3,8 +3,23 @@ import UIKit
 extension Outlay {
 
     @inlinable
-    public static func activate(@ArrayBuilder _ constraints: () -> [NSLayoutConstraint]) {
-        NSLayoutConstraint.activate(constraints())
+    @discardableResult
+    public static func activate(
+        @ArrayBuilder _ constraints: () -> [NSLayoutConstraint]
+    ) -> [NSLayoutConstraint] {
+        let constraints = constraints()
+        NSLayoutConstraint.activate(constraints)
+        return constraints
+    }
+
+    @inlinable
+    public static func prioritize(
+        _ priority: UILayoutPriority,
+        @ArrayBuilder _ constraints: () -> [NSLayoutConstraint]
+    ) -> [NSLayoutConstraint] {
+        let constraints = constraints()
+        constraints.forEach { $0.priority = priority }
+        return constraints
     }
 }
 
@@ -47,10 +62,10 @@ extension Outlay {
             guard let spacing = $0 as? Spacing else {
                 return false
             }
-            return spacing.dimension == nil
+            return spacing.minLength == UIView.noIntrinsicMetric
         }
         guard let lhs = flexibleSpacings.first else { return }
-        Outlay.activate {
+        activate {
             for rhs in flexibleSpacings[1...] {
                 lhs.sizeAnchor == rhs.sizeAnchor
             }

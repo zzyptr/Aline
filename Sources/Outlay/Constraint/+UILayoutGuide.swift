@@ -1,9 +1,9 @@
 import UIKit
 
-extension UIView {
+extension UILayoutGuide {
 
     @inlinable
-    public var edges: EdgesAnchor {
+    public var edgesAnchor: EdgesAnchor {
         return EdgesAnchor(
             top: topAnchor,
             leading: leadingAnchor,
@@ -13,7 +13,7 @@ extension UIView {
     }
 }
 
-extension UIView {
+extension UILayoutGuide {
 
     @inlinable
     public var topLeadingAnchor: PointAnchor {
@@ -41,8 +41,8 @@ extension UIView {
     }
 }
 
-extension UIView {
-
+extension UILayoutGuide {
+    
     @inlinable
     public var sizeAnchor: SizeAnchor {
         return SizeAnchor(width: widthAnchor, height: heightAnchor)
