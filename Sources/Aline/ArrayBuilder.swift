@@ -1,4 +1,5 @@
 @resultBuilder
+@usableFromInline
 enum ArrayBuilder {
 
     @inlinable

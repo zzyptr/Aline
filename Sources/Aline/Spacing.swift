@@ -9,11 +9,6 @@ public final class Spacing: UIView {
     public init(_ minLength: CGFloat = UIView.noIntrinsicMetric) {
         self.minLength = minLength
         super.init(frame: .zero)
-    }
-
-    @inlinable
-    public override func willMove(toSuperview newSuperview: UIView?) {
-        super.willMove(toSuperview: newSuperview)
 
         let priority = UILayoutPriority(minLength == UIView.noIntrinsicMetric ? 1 : 9)
         setContentHuggingPriority(priority, for: .vertical)

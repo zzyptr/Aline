@@ -1,31 +1,9 @@
 import UIKit
 
-extension Outlay {
+extension UIStackView {
 
     @inlinable
-    @discardableResult
-    public static func activate(
-        @ArrayBuilder _ constraints: () -> [NSLayoutConstraint]
-    ) -> [NSLayoutConstraint] {
-        let constraints = constraints()
-        NSLayoutConstraint.activate(constraints)
-        return constraints
-    }
-
-    @inlinable
-    public static func prioritize(
-        _ priority: UILayoutPriority,
-        @ArrayBuilder _ constraints: () -> [NSLayoutConstraint]
-    ) -> [NSLayoutConstraint] {
-        let constraints = constraints()
-        constraints.forEach { $0.priority = priority }
-        return constraints
-    }
-}
-
-extension Outlay {
-
-    public static func stackX(
+    public static func horizontal(
         alignment: UIStackView.Alignment = .fill,
         distribution: UIStackView.Distribution = .fill,
         spacing: CGFloat = 0,
@@ -41,7 +19,8 @@ extension Outlay {
         return stack
     }
 
-    public static func stackY(
+    @inlinable
+    public static func vertical(
         alignment: UIStackView.Alignment = .fill,
         distribution: UIStackView.Distribution = .fill,
         spacing: CGFloat = 0,
@@ -57,6 +36,7 @@ extension Outlay {
         return stack
     }
 
+    @inlinable
     static func equateFlexibleSpacingsOf(_ views: [UIView]) {
         let flexibleSpacings = views.filter {
             guard let spacing = $0 as? Spacing else {
@@ -65,12 +45,10 @@ extension Outlay {
             return spacing.minLength == UIView.noIntrinsicMetric
         }
         guard let lhs = flexibleSpacings.first else { return }
-        activate {
+        NSLayoutConstraint.activate {
             for rhs in flexibleSpacings[1...] {
                 lhs.sizeAnchor == rhs.sizeAnchor
             }
         }
     }
 }
-
-public enum Outlay {}

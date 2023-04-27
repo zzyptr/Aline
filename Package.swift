@@ -2,17 +2,17 @@
 import PackageDescription
 
 let package = Package(
-    name: "Outlay",
+    name: "Aline",
     platforms: [
         .iOS(.v11),
         .tvOS(.v11)
     ],
     products: [
         .library(
-            name: "Outlay",
-            targets: ["Outlay"])
+            name: "Aline",
+            targets: ["Aline"])
     ],
     targets: [
-        .target(name: "Outlay")
+        .target(name: "Aline")
     ]
 )
