@@ -1,6 +1,6 @@
 import UIKit
 
-extension NSLayoutConstraint {
+extension Aline {
 
     @inlinable
     @discardableResult
@@ -18,7 +18,9 @@ extension NSLayoutConstraint {
         @ArrayBuilder _ constraints: () -> [NSLayoutConstraint]
     ) -> [NSLayoutConstraint] {
         let constraints = constraints()
-        constraints.forEach { $0.priority = priority }
+        for constraint in constraints {
+            constraint.priority = priority
+        }
         return constraints
     }
 }

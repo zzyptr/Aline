@@ -6,8 +6,13 @@ public final class Spacing: UIView {
     let minLength: CGFloat
 
     @inlinable
-    public init(_ minLength: CGFloat = UIView.noIntrinsicMetric) {
-        self.minLength = minLength
+    var isFlexible: Bool {
+        return minLength == UIView.noIntrinsicMetric
+    }
+
+    @inlinable
+    public init(_ minLength: CGFloat? = nil) {
+        self.minLength = minLength ?? UIView.noIntrinsicMetric
         super.init(frame: .zero)
 
         let priority = UILayoutPriority(minLength == UIView.noIntrinsicMetric ? 1 : 9)

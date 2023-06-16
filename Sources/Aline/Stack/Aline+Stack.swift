@@ -1,9 +1,9 @@
 import UIKit
 
-extension UIStackView {
+extension Aline {
 
     @inlinable
-    public static func horizontal(
+    public static func hstack(
         alignment: UIStackView.Alignment = .fill,
         distribution: UIStackView.Distribution = .fill,
         spacing: CGFloat = 0,
@@ -20,7 +20,7 @@ extension UIStackView {
     }
 
     @inlinable
-    public static func vertical(
+    public static func vstack(
         alignment: UIStackView.Alignment = .fill,
         distribution: UIStackView.Distribution = .fill,
         spacing: CGFloat = 0,
@@ -39,13 +39,13 @@ extension UIStackView {
     @inlinable
     static func equateFlexibleSpacingsOf(_ views: [UIView]) {
         let flexibleSpacings = views.filter {
-            guard let spacing = $0 as? Spacing else {
-                return false
+            if let spacing = $0 as? Spacing {
+                return spacing.isFlexible
             }
-            return spacing.minLength == UIView.noIntrinsicMetric
+            return false
         }
         guard let lhs = flexibleSpacings.first else { return }
-        NSLayoutConstraint.activate {
+        Aline.activate {
             for rhs in flexibleSpacings[1...] {
                 lhs.sizeAnchor == rhs.sizeAnchor
             }
