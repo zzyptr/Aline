@@ -1,6 +1,6 @@
 import UIKit
 
-extension Aline {
+public enum Aline {
 
     @inlinable
     @discardableResult

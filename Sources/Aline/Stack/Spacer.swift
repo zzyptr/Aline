@@ -1,6 +1,6 @@
 import UIKit
 
-public final class Spacing: UIView {
+public final class Spacer: UIView {
 
     @usableFromInline
     let minLength: CGFloat
