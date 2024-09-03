@@ -3,16 +3,12 @@ import UIKit
 public final class VStack: UIStackView {
 
     public init(
-        alignment: UIStackView.Alignment = .fill,
-        distribution: UIStackView.Distribution = .fill,
-        spacing: CGFloat = 0,
+        alignment: UIStackView.Alignment = .center,
         @ArrayBuilder views: () -> [UIView]
     ) {
         super.init(frame: .zero)
         super.axis = .vertical
         self.alignment = alignment
-        self.distribution = distribution
-        self.spacing = spacing
         let views = views()
         for view in views {
             self.addArrangedSubview(view)
@@ -25,10 +21,8 @@ public final class VStack: UIStackView {
             return false
         }
         guard let lhs = flexibleSpacings.first else { return }
-        Aline.activate {
-            for rhs in flexibleSpacings[1...] {
-                lhs.sizeAnchor == rhs.sizeAnchor
-            }
+        for rhs in flexibleSpacings[1...] {
+            lhs.heightAnchor.constraint(equalTo: rhs.heightAnchor).isActive = true
         }
     }
 
