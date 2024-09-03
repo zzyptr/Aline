@@ -2,29 +2,31 @@ import UIKit
 
 public final class Spacer: UIView {
 
-    @usableFromInline
     let minLength: CGFloat
 
-    @inlinable
+    var axis = NSLayoutConstraint.Axis.horizontal
+
+    @inline(__always)
     var isFlexible: Bool {
         return minLength == UIView.noIntrinsicMetric
     }
 
-    @inlinable
+    @inline(__always)
     public init(_ minLength: CGFloat? = nil) {
         self.minLength = minLength ?? UIView.noIntrinsicMetric
         super.init(frame: .zero)
-
-        let priority = UILayoutPriority(minLength == UIView.noIntrinsicMetric ? 1 : 9)
-        setContentHuggingPriority(priority, for: .vertical)
-        setContentHuggingPriority(priority, for: .horizontal)
-        setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
-        setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
     }
 
-    @inlinable
+    @inline(__always)
     public override var intrinsicContentSize: CGSize {
-        return CGSize(width: minLength, height: minLength)
+        switch axis {
+        case .horizontal:
+            return CGSize(width: minLength, height: UIView.noIntrinsicMetric)
+        case .vertical:
+            return CGSize(width: UIView.noIntrinsicMetric, height: minLength)
+        @unknown default:
+            return CGSize(width: UIView.noIntrinsicMetric, height: UIView.noIntrinsicMetric)
+        }
     }
 
     @available(*, unavailable)

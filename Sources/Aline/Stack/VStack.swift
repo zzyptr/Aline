@@ -2,26 +2,25 @@ import UIKit
 
 public final class VStack: UIStackView {
 
-    public init(
-        alignment: UIStackView.Alignment = .center,
-        @ArrayBuilder views: () -> [UIView]
-    ) {
+    public init(@ArrayBuilder views: () -> [UIView]) {
         super.init(frame: .zero)
         super.axis = .vertical
-        self.alignment = alignment
-        let views = views()
-        for view in views {
-            self.addArrangedSubview(view)
-        }
+        translatesAutoresizingMaskIntoConstraints = false
+        
+        let arrangedSubviews = views()
+        var flexibleSpacers = [Spacer]()
+        for view in arrangedSubviews {
+            addArrangedSubview(view)
 
-        let flexibleSpacings = views.filter {
-            if let spacing = $0 as? Spacer {
-                return spacing.isFlexible
+            if let spacer = view as? Spacer {
+                spacer.axis = .vertical
+                if spacer.isFlexible {
+                    flexibleSpacers.append(spacer)
+                }
             }
-            return false
         }
-        guard let lhs = flexibleSpacings.first else { return }
-        for rhs in flexibleSpacings[1...] {
+        guard let lhs = flexibleSpacers.first else { return }
+        for rhs in flexibleSpacers[1...] {
             lhs.heightAnchor.constraint(equalTo: rhs.heightAnchor).isActive = true
         }
     }
@@ -31,6 +30,7 @@ public final class VStack: UIStackView {
         fatalError()
     }
 
+    @inline(__always)
     public override var axis: NSLayoutConstraint.Axis {
         get {
             return .vertical
