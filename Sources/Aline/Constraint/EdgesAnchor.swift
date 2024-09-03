@@ -3,7 +3,7 @@ import UIKit
 extension EdgesAnchor {
 
     /// EdgesAnchor == EdgesAnchor
-    @inlinable
+    @inline(__always)
     public static func == (lhs: EdgesAnchor, rhs: EdgesAnchor) -> [NSLayoutConstraint] {
         return [
             lhs.top.constraint(equalTo: rhs.top),
@@ -14,7 +14,7 @@ extension EdgesAnchor {
     }
 
     /// EdgesAnchor <= EdgesAnchor
-    @inlinable
+    @inline(__always)
     public static func <= (lhs: EdgesAnchor, rhs: EdgesAnchor) -> [NSLayoutConstraint] {
         return [
             lhs.top.constraint(lessThanOrEqualTo: rhs.top),
@@ -25,7 +25,7 @@ extension EdgesAnchor {
     }
 
     /// EdgesAnchor >= EdgesAnchor
-    @inlinable
+    @inline(__always)
     public static func >= (lhs: EdgesAnchor, rhs: EdgesAnchor) -> [NSLayoutConstraint] {
         return [
             lhs.top.constraint(greaterThanOrEqualTo: rhs.top),
@@ -39,7 +39,7 @@ extension EdgesAnchor {
 extension EdgesAnchor {
 
     /// EdgesAnchor == EdgesAnchor + c
-    @inlinable
+    @inline(__always)
     public static func == (lhs: EdgesAnchor, rhs: Addition<EdgesAnchor, NSDirectionalEdgeInsets>) -> [NSLayoutConstraint] {
         return [
             lhs.top.constraint(equalTo: rhs.lhs.top, constant: rhs.rhs.top),
@@ -50,7 +50,7 @@ extension EdgesAnchor {
     }
 
     /// EdgesAnchor <= EdgesAnchor + c
-    @inlinable
+    @inline(__always)
     public static func <= (lhs: EdgesAnchor, rhs: Addition<EdgesAnchor, NSDirectionalEdgeInsets>) -> [NSLayoutConstraint] {
         return [
             lhs.top.constraint(lessThanOrEqualTo: rhs.lhs.top, constant: rhs.rhs.top),
@@ -61,7 +61,7 @@ extension EdgesAnchor {
     }
 
     /// EdgesAnchor >= EdgesAnchor + c
-    @inlinable
+    @inline(__always)
     public static func >= (lhs: EdgesAnchor, rhs: Addition<EdgesAnchor, NSDirectionalEdgeInsets>) -> [NSLayoutConstraint] {
         return [
             lhs.top.constraint(greaterThanOrEqualTo: rhs.lhs.top, constant: rhs.rhs.top),
@@ -75,13 +75,13 @@ extension EdgesAnchor {
 extension EdgesAnchor {
 
     /// EdgesAnchor + c
-    @inlinable
+    @inline(__always)
     public static func + (lhs: EdgesAnchor, rhs: NSDirectionalEdgeInsets) -> Addition<EdgesAnchor, NSDirectionalEdgeInsets> {
         return Addition(lhs, rhs)
     }
 
     /// EdgesAnchor - c
-    @inlinable
+    @inline(__always)
     public static func - (lhs: EdgesAnchor, rhs: NSDirectionalEdgeInsets) -> Addition<EdgesAnchor, NSDirectionalEdgeInsets> {
         let addend = NSDirectionalEdgeInsets(
             top: -rhs.top,
@@ -95,19 +95,12 @@ extension EdgesAnchor {
 
 public struct EdgesAnchor {
 
-    @usableFromInline
     let top: NSLayoutYAxisAnchor
-
-    @usableFromInline
     let leading: NSLayoutXAxisAnchor
-
-    @usableFromInline
     let bottom: NSLayoutYAxisAnchor
-
-    @usableFromInline
     let trailing: NSLayoutXAxisAnchor
 
-    @inlinable
+    @inline(__always)
     init(
         top: NSLayoutYAxisAnchor,
         leading: NSLayoutXAxisAnchor,

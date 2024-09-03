@@ -1,12 +1,9 @@
 public struct Addition<LHS, RHS> {
 
-    @usableFromInline
     let lhs: LHS
-
-    @usableFromInline
     let rhs: RHS
 
-    @inlinable
+    @inline(__always)
     init(_ lhs: LHS, _ rhs: RHS) {
         self.lhs = lhs
         self.rhs = rhs
@@ -15,13 +12,10 @@ public struct Addition<LHS, RHS> {
 
 public struct Multiplication<LHS, RHS> {
 
-    @usableFromInline
     let lhs: LHS
-
-    @usableFromInline
     let rhs: RHS
 
-    @inlinable
+    @inline(__always)
     init(_ lhs: LHS, _ rhs: RHS) {
         self.lhs = lhs
         self.rhs = rhs

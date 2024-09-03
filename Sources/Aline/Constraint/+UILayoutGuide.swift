@@ -2,7 +2,7 @@ import UIKit
 
 extension UILayoutGuide {
 
-    @inlinable
+    @inline(__always)
     public var edgesAnchor: EdgesAnchor {
         return EdgesAnchor(
             top: topAnchor,
@@ -15,27 +15,27 @@ extension UILayoutGuide {
 
 extension UILayoutGuide {
 
-    @inlinable
+    @inline(__always)
     public var topLeadingAnchor: PointAnchor {
         return PointAnchor(x: leadingAnchor, y: bottomAnchor)
     }
 
-    @inlinable
+    @inline(__always)
     public var bottomLeadingAnchor: PointAnchor {
         return PointAnchor(x: leadingAnchor, y: bottomAnchor)
     }
 
-    @inlinable
+    @inline(__always)
     public var bottomTrailingAnchor: PointAnchor {
         return PointAnchor(x: trailingAnchor, y: bottomAnchor)
     }
 
-    @inlinable
+    @inline(__always)
     public var topTrailingAnchor: PointAnchor {
         return PointAnchor(x: leadingAnchor, y: bottomAnchor)
     }
 
-    @inlinable
+    @inline(__always)
     public var centerAnchor: PointAnchor {
         return PointAnchor(x: centerXAnchor, y: centerYAnchor)
     }
@@ -43,7 +43,7 @@ extension UILayoutGuide {
 
 extension UILayoutGuide {
     
-    @inlinable
+    @inline(__always)
     public var sizeAnchor: SizeAnchor {
         return SizeAnchor(width: widthAnchor, height: heightAnchor)
     }

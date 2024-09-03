@@ -3,7 +3,7 @@ import UIKit
 extension PointAnchor {
 
     /// PointAnchor == PointAnchor
-    @inlinable
+    @inline(__always)
     public static func == (lhs: PointAnchor, rhs: PointAnchor) -> [NSLayoutConstraint] {
         return [
             lhs.x.constraint(equalTo: rhs.x),
@@ -12,7 +12,7 @@ extension PointAnchor {
     }
 
     /// PointAnchor <= PointAnchor
-    @inlinable
+    @inline(__always)
     public static func <= (lhs: PointAnchor, rhs: PointAnchor) -> [NSLayoutConstraint] {
         return [
             lhs.x.constraint(lessThanOrEqualTo: rhs.x),
@@ -21,7 +21,7 @@ extension PointAnchor {
     }
 
     /// PointAnchor >= PointAnchor
-    @inlinable
+    @inline(__always)
     public static func >= (lhs: PointAnchor, rhs: PointAnchor) -> [NSLayoutConstraint] {
         return [
             lhs.x.constraint(greaterThanOrEqualTo: rhs.x),
@@ -33,7 +33,7 @@ extension PointAnchor {
 extension PointAnchor {
 
     /// PointAnchor == PointAnchor + c
-    @inlinable
+    @inline(__always)
     public static func == (lhs: PointAnchor, rhs: Addition<PointAnchor, CGPoint>) -> [NSLayoutConstraint] {
         return [
             lhs.x.constraint(equalTo: rhs.lhs.x, constant: rhs.rhs.x),
@@ -42,7 +42,7 @@ extension PointAnchor {
     }
 
     /// PointAnchor <= PointAnchor + c
-    @inlinable
+    @inline(__always)
     public static func <= (lhs: PointAnchor, rhs: Addition<PointAnchor, CGPoint>) -> [NSLayoutConstraint] {
         return [
             lhs.x.constraint(lessThanOrEqualTo: rhs.lhs.x, constant: rhs.rhs.x),
@@ -52,7 +52,7 @@ extension PointAnchor {
     }
 
     /// PointAnchor >= PointAnchor + c
-    @inlinable
+    @inline(__always)
     public static func >= (lhs: PointAnchor, rhs: Addition<PointAnchor, CGPoint>) -> [NSLayoutConstraint] {
         return [
             lhs.x.constraint(greaterThanOrEqualTo: rhs.lhs.x, constant: rhs.rhs.x),
@@ -64,13 +64,13 @@ extension PointAnchor {
 extension PointAnchor {
 
     /// PointAnchor + c
-    @inlinable
+    @inline(__always)
     public static func + (lhs: PointAnchor, rhs: CGPoint) -> Addition<PointAnchor, CGPoint> {
         return Addition(lhs, rhs)
     }
 
     /// PointAnchor - c
-    @inlinable
+    @inline(__always)
     public static func - (lhs: PointAnchor, rhs: CGPoint) -> Addition<PointAnchor, CGPoint> {
         let addend = CGPoint(x: -rhs.x, y: -rhs.y)
         return Addition(lhs, addend)
@@ -79,13 +79,10 @@ extension PointAnchor {
 
 public struct PointAnchor {
 
-    @usableFromInline
     let x: NSLayoutXAxisAnchor
-
-    @usableFromInline
     let y: NSLayoutYAxisAnchor
 
-    @inlinable
+    @inline(__always)
     init(x: NSLayoutXAxisAnchor, y: NSLayoutYAxisAnchor) {
         self.x = x
         self.y = y

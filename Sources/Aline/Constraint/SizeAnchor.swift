@@ -3,7 +3,7 @@ import UIKit
 extension SizeAnchor {
 
     /// SizeAnchor == c
-    @inlinable
+    @inline(__always)
     public static func == (lhs: SizeAnchor, rhs: CGSize) -> [NSLayoutConstraint] {
         return [
             lhs.width.constraint(equalToConstant: rhs.width),
@@ -12,7 +12,7 @@ extension SizeAnchor {
     }
 
     /// SizeAnchor <= c
-    @inlinable
+    @inline(__always)
     public static func <= (lhs: SizeAnchor, rhs: CGSize) -> [NSLayoutConstraint] {
         return [
             lhs.width.constraint(lessThanOrEqualToConstant: rhs.width),
@@ -21,7 +21,7 @@ extension SizeAnchor {
     }
 
     /// SizeAnchor >= c
-    @inlinable
+    @inline(__always)
     public static func >= (lhs: SizeAnchor, rhs: CGSize) -> [NSLayoutConstraint] {
         return [
             lhs.width.constraint(greaterThanOrEqualToConstant: rhs.width),
@@ -33,7 +33,7 @@ extension SizeAnchor {
 extension SizeAnchor {
 
     /// SizeAnchor == SizeAnchor
-    @inlinable
+    @inline(__always)
     public static func == (lhs: SizeAnchor, rhs: SizeAnchor) -> [NSLayoutConstraint] {
         return [
             lhs.width.constraint(equalTo: rhs.width),
@@ -42,7 +42,7 @@ extension SizeAnchor {
     }
 
     /// SizeAnchor <= SizeAnchor
-    @inlinable
+    @inline(__always)
     public static func <= (lhs: SizeAnchor, rhs: SizeAnchor) -> [NSLayoutConstraint] {
         return [
             lhs.width.constraint(lessThanOrEqualTo: rhs.width),
@@ -51,7 +51,7 @@ extension SizeAnchor {
     }
 
     /// SizeAnchor >= SizeAnchor
-    @inlinable
+    @inline(__always)
     public static func >= (lhs: SizeAnchor, rhs: SizeAnchor) -> [NSLayoutConstraint] {
         return [
             lhs.width.constraint(greaterThanOrEqualTo: rhs.width),
@@ -63,7 +63,7 @@ extension SizeAnchor {
 extension SizeAnchor {
 
     /// SizeAnchor == SizeAnchor * m + c
-    @inlinable
+    @inline(__always)
     public static func == (lhs: SizeAnchor, rhs: Multiplication<SizeAnchor, CGFloat>) -> [NSLayoutConstraint] {
         return [
             lhs.width.constraint(equalTo: rhs.lhs.width, multiplier: rhs.rhs),
@@ -72,7 +72,7 @@ extension SizeAnchor {
     }
 
     /// SizeAnchor <= SizeAnchor * m + c
-    @inlinable
+    @inline(__always)
     public static func <= (lhs: SizeAnchor, rhs: Multiplication<SizeAnchor, CGFloat>) -> [NSLayoutConstraint] {
         return [
             lhs.width.constraint(lessThanOrEqualTo: rhs.lhs.width, multiplier: rhs.rhs),
@@ -81,7 +81,7 @@ extension SizeAnchor {
     }
 
     /// SizeAnchor >= SizeAnchor * m + c
-    @inlinable
+    @inline(__always)
     public static func >= (lhs: SizeAnchor, rhs: Multiplication<SizeAnchor, CGFloat>) -> [NSLayoutConstraint] {
         return [
             lhs.width.constraint(greaterThanOrEqualTo: rhs.lhs.width, multiplier: rhs.rhs),
@@ -93,7 +93,7 @@ extension SizeAnchor {
 extension SizeAnchor {
 
     /// SizeAnchor == SizeAnchor * m + c
-    @inlinable
+    @inline(__always)
     public static func == (lhs: SizeAnchor, rhs: Addition<Multiplication<SizeAnchor, CGFloat>, CGSize>) -> [NSLayoutConstraint] {
         return [
             lhs.width.constraint(equalTo: rhs.lhs.lhs.width, multiplier: rhs.lhs.rhs, constant: rhs.rhs.width),
@@ -102,7 +102,7 @@ extension SizeAnchor {
     }
 
     /// SizeAnchor <= SizeAnchor * m + c
-    @inlinable
+    @inline(__always)
     public static func <= (lhs: SizeAnchor, rhs: Addition<Multiplication<SizeAnchor, CGFloat>, CGSize>) -> [NSLayoutConstraint] {
         return [
             lhs.width.constraint(lessThanOrEqualTo: rhs.lhs.lhs.width, multiplier: rhs.lhs.rhs, constant: rhs.rhs.width),
@@ -111,7 +111,7 @@ extension SizeAnchor {
     }
 
     /// SizeAnchor >= SizeAnchor * m + c
-    @inlinable
+    @inline(__always)
     public static func >= (lhs: SizeAnchor, rhs: Addition<Multiplication<SizeAnchor, CGFloat>, CGSize>) -> [NSLayoutConstraint] {
         return [
             lhs.width.constraint(greaterThanOrEqualTo: rhs.lhs.lhs.width, multiplier: rhs.lhs.rhs, constant: rhs.rhs.width),
@@ -123,19 +123,19 @@ extension SizeAnchor {
 extension SizeAnchor {
 
     /// SizeAnchor * m + 0
-    @inlinable
+    @inline(__always)
     public static func * (lhs: SizeAnchor, rhs: CGFloat) -> Multiplication<SizeAnchor, CGFloat> {
         return Multiplication(lhs, rhs)
     }
 
     /// SizeAnchor * 1 + c
-    @inlinable
+    @inline(__always)
     public static func + (lhs: SizeAnchor, rhs: CGSize) -> Addition<Multiplication<SizeAnchor, CGFloat>, CGSize> {
         return Addition(Multiplication(lhs, 1), rhs)
     }
 
     /// SizeAnchor * 1 - c
-    @inlinable
+    @inline(__always)
     public static func - (lhs: SizeAnchor, rhs: CGSize) -> Addition<Multiplication<SizeAnchor, CGFloat>, CGSize> {
         let addend = CGSize(width: -rhs.width, height: -rhs.height)
         return Addition(Multiplication(lhs, 1), addend)
@@ -145,13 +145,13 @@ extension SizeAnchor {
 extension Multiplication where LHS == SizeAnchor, RHS == CGFloat {
 
     /// SizeAnchor * m + c
-    @inlinable
+    @inline(__always)
     public static func + (lhs: Multiplication, rhs: CGSize) -> Addition<Multiplication, CGSize> {
         return Addition(lhs, rhs)
     }
 
     /// SizeAnchor * m - c
-    @inlinable
+    @inline(__always)
     public static func - (lhs: Multiplication, rhs: CGSize) -> Addition<Multiplication, CGSize> {
         let addend = CGSize(width: -rhs.width, height: -rhs.height)
         return Addition(lhs, addend)
@@ -160,13 +160,10 @@ extension Multiplication where LHS == SizeAnchor, RHS == CGFloat {
 
 public struct SizeAnchor {
 
-    @usableFromInline
     let width: NSLayoutDimension
-
-    @usableFromInline
     let height: NSLayoutDimension
 
-    @inlinable
+    @inline(__always)
     init(width: NSLayoutDimension, height: NSLayoutDimension) {
         self.width = width
         self.height = height

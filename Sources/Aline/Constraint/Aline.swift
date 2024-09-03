@@ -2,7 +2,7 @@ import UIKit
 
 public enum Aline {
 
-    @inlinable
+    @inline(__always)
     @discardableResult
     public static func activate(
         @ArrayBuilder _ constraints: () -> [NSLayoutConstraint]
@@ -12,7 +12,7 @@ public enum Aline {
         return constraints
     }
 
-    @inlinable
+    @inline(__always)
     public static func prioritize(
         _ priority: UILayoutPriority,
         @ArrayBuilder _ constraints: () -> [NSLayoutConstraint]
